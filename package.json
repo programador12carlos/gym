@@ -1,5 +1,5 @@
 {
-  "name": "03-api-solid",
+  "name": "gym",
   "version": "1.0.0",
   "description": "api de regenciamento da academia",
   "main": "index.js",
@@ -16,12 +16,12 @@
   "author": "carlos romao",
   "license": "ISC",
   "devDependencies": {
+    "@biomejs/biome": "1.9.1",
     "@rocketseat/eslint-config": "^2.2.2",
     "@types/bcryptjs": "2.4.6",
     "@types/node": "^22.0.2",
     "@vitest/coverage-v8": "2.0.5",
     "@vitest/ui": "2.0.5",
-    "eslint": "^8.57.0",
     "prisma": "5.17.0",
     "tsup": "^8.2.3",
     "tsx": "^4.16.5",
@@ -36,5 +36,13 @@
     "dotenv": "16.4.5",
     "fastify": "^4.28.1",
     "zod": "3.23.8"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/programador12carlos/gym.git"
+  },
+  "bugs": {
+    "url": "https://github.com/programador12carlos/gym/issues"
+  },
+  "homepage": "https://github.com/programador12carlos/gym#readme"
 }

@@ -1,6 +1,9 @@
 {
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "biomejs.biome",
   "cSpell.words": [
     "autentificdor",
+    "biomejs",
     "chek",
     "criar",
     "DEVE",
