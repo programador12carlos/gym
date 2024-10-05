@@ -22,6 +22,7 @@ export class CheckinUser {
   ) {}
 
   async execute({ userId, ginId }: CheckInRequest): Promise<CheckInResponse> {
+    // verificar a existencia de um ginasio pelo id do mesmo
     const gym = await this.funcoesdorepositorioGyn.ProcurarId(ginId)
     if (!gym) {
       throw new ResouresError()
