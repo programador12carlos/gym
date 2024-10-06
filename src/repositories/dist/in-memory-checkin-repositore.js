@@ -36,42 +36,58 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.CheckinUser = void 0;
-var resoures_error_user_1 = require("./erros/resoures-error-user");
-var CheckinUser = /** @class */ (function () {
-    function CheckinUser(funcosrepositorio, funcoesdorepositorioGyn) {
-        this.funcosrepositorio = funcosrepositorio;
-        this.funcoesdorepositorioGyn = funcoesdorepositorioGyn;
+exports.InMemoryCheckInRepository = void 0;
+var dayjs_1 = require("dayjs");
+var isSameOrAfter_1 = require("dayjs/plugin/isSameOrAfter");
+var isSameOrBefore_1 = require("dayjs/plugin/isSameOrBefore");
+var crypto_1 = require("crypto");
+// Extensão dos plugins necessários para as comparações
+dayjs_1["default"].extend(isSameOrAfter_1["default"]);
+dayjs_1["default"].extend(isSameOrBefore_1["default"]);
+// Criar um banco de dados local para testes
+var InMemoryCheckInRepository = /** @class */ (function () {
+    function InMemoryCheckInRepository() {
+        // criar um array para armazenar os dados com type user
+        this.items = [];
     }
-    CheckinUser.prototype.execute = function (_a) {
-        var userId = _a.userId, ginId = _a.ginId;
+    /*
+  Funçoes do banco check-in
+  ----------------------------------------------------------------------------
+  [x] verificar se é possivel efectuar check-in
+       na nova academia se baseando na data do check-in anterior
+  [x] Criar user no banco
+     */
+    /*  [x] verificar se é possivel efectuar check-in
+    na nova academia se baseando na data do check-in anterior
+  */
+    InMemoryCheckInRepository.prototype.procurarDataCheckinUser = function (userId, data) {
+        var startOfDay = dayjs_1["default"](data).startOf('day');
+        var endOfDay = dayjs_1["default"](data).endOf('day');
+        var verificarCheckinUser = this.items.find(function (checkin) {
+            var dataOfCadastro = dayjs_1["default"](checkin.create_time);
+            var verificarData = dataOfCadastro.isSameOrAfter(startOfDay) &&
+                dataOfCadastro.isSameOrBefore(endOfDay);
+            return checkin.user_id === userId && verificarData;
+        });
+        return Promise.resolve(verificarCheckinUser || null);
+    };
+    // [x] Criar user no banco
+    InMemoryCheckInRepository.prototype.criar = function (data) {
         return __awaiter(this, void 0, Promise, function () {
-            var gym, procurarcheckinuser, checkin;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
-                    case 0: return [4 /*yield*/, this.funcoesdorepositorioGyn.ProcurarId(ginId)];
-                    case 1:
-                        gym = _b.sent();
-                        if (!gym) {
-                            throw new resoures_error_user_1.ResouresError();
-                        }
-                        return [4 /*yield*/, this.funcosrepositorio.procurarDataCheckinUser(userId, new Date())];
-                    case 2:
-                        procurarcheckinuser = _b.sent();
-                        if (procurarcheckinuser) {
-                            throw new Error('O usuário já fez check-in hoje.');
-                        }
-                        return [4 /*yield*/, this.funcosrepositorio.criar({
-                                user_id: userId,
-                                gin_id: ginId
-                            })];
-                    case 3:
-                        checkin = _b.sent();
-                        return [2 /*return*/, { checkin: checkin }];
-                }
+            var checkin;
+            return __generator(this, function (_a) {
+                checkin = {
+                    id: crypto_1.randomUUID(),
+                    create_time: new Date(),
+                    validade_at: data.validade_at ? new Date(data.validade_at) : null,
+                    user_id: data.user_id,
+                    gin_id: data.gin_id
+                };
+                this.items.push(checkin);
+                return [2 /*return*/, checkin];
             });
         });
     };
-    return CheckinUser;
+    return InMemoryCheckInRepository;
 }());
-exports.CheckinUser = CheckinUser;
+exports.InMemoryCheckInRepository = InMemoryCheckInRepository;

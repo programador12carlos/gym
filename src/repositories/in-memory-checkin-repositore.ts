@@ -9,14 +9,25 @@ import { randomUUID } from 'crypto'
 dayjs.extend(isSameOrAfter)
 dayjs.extend(isSameOrBefore)
 
+// Criar um banco de dados local para testes
 export class InMemoryCheckInRepository implements FuncoesDoRepositorioCheckin {
+  // criar um array para armazenar os dados com type user
   public items: Checkin[] = []
 
+  /*
+Funçoes do banco check-in
+----------------------------------------------------------------------------
+[x] verificar se é possivel efectuar check-in
+     na nova academia se baseando na data do check-in anterior
+[x] Criar user no banco
+   */
+
+  /*  [x] verificar se é possivel efectuar check-in 
+  na nova academia se baseando na data do check-in anterior
+*/
   procurarDataCheckinUser(userId: string, data: Date): Promise<Checkin | null> {
     const startOfDay = dayjs(data).startOf('day')
     const endOfDay = dayjs(data).endOf('day')
-
-    // Correção na lógica de verificação das datas
     const verificarCheckinUser = this.items.find((checkin) => {
       const dataOfCadastro = dayjs(checkin.create_time)
       const verificarData =
@@ -28,6 +39,7 @@ export class InMemoryCheckInRepository implements FuncoesDoRepositorioCheckin {
     return Promise.resolve(verificarCheckinUser || null)
   }
 
+  // [x] Criar user no banco
   async criar(data: Prisma.CheckinUncheckedCreateInput): Promise<Checkin> {
     const checkin = {
       id: randomUUID(),
@@ -36,7 +48,6 @@ export class InMemoryCheckInRepository implements FuncoesDoRepositorioCheckin {
       user_id: data.user_id,
       gin_id: data.gin_id,
     }
-
     this.items.push(checkin)
     return checkin
   }

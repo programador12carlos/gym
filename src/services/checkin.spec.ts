@@ -44,23 +44,23 @@ describe('testando o checkin', () => {
       title: 'AcademiaSOrect',
       descricption: '',
       phone: '',
-      latitule: new Decimal(0),
-      longitude: new Decimal(0),
+      latitule: new Decimal(-8.92421405),
+      longitude: new Decimal(13.186151933726588),
     })
 
     vi.setSystemTime(new Date(2022, 0, 20, 0, 0))
     await sut.execute({
       userId: 'user-01',
       ginId: 'gym-01',
-      latitude: 0,
-      longitude: 0,
+      latitude: -28.9222819,
+      longitude: 93.275625,
     })
     await expect(() =>
       sut.execute({
         userId: 'user-01',
         ginId: 'gym-041',
-        latitude: 0,
-        longitude: 0,
+        latitude: -28.9222819,
+        longitude: 93.275625,
       }),
     ).rejects.toBeInstanceOf(Error)
   })
@@ -78,8 +78,8 @@ it(' NAO DEVERIA SER POSSIVEL FAZER CHECK IN EM UMA ACADEMIA DISTANTE', async ()
   await expect(() =>
     sut.execute({
       userId: 'cart_2',
-      ginId: 'gym-02',
-      latitude: -8.9222819,
+      ginId: 'gym-01',
+      latitude: -8.92421405,
       longitude: 13.275625,
     }),
   ).rejects.toBeInstanceOf(Error)
