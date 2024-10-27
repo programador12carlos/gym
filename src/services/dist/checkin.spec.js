@@ -100,15 +100,15 @@ vitest_1.describe('testando o checkin', function () {
                     return [4 /*yield*/, sut.execute({
                             userId: 'user-01',
                             ginId: 'gym-01',
-                            latitude: -28.9222819,
-                            longitude: 93.275625
+                            latitude: -8.92421405,
+                            longitude: 13.186151933726588
                         })];
                 case 2:
                     _a.sent();
                     return [4 /*yield*/, vitest_1.expect(function () {
                             return sut.execute({
                                 userId: 'user-01',
-                                ginId: 'gym-041',
+                                ginId: 'gym-01',
                                 latitude: -28.9222819,
                                 longitude: 93.275625
                             });
@@ -138,7 +138,7 @@ vitest_1.it(' NAO DEVERIA SER POSSIVEL FAZER CHECK IN EM UMA ACADEMIA DISTANTE',
                             userId: 'cart_2',
                             ginId: 'gym-01',
                             latitude: -8.92421405,
-                            longitude: 13.275625
+                            longitude: 3.186151933726588
                         });
                     }).rejects.toBeInstanceOf(Error)];
             case 2:

@@ -64,7 +64,7 @@ export class CheckinUser {
       throw new Error()
     }
     // [x] criaçao de um checkin
-    const checkin = await this.funcosrepositorio.criar({
+    const checkin = await this.funcosrepositorio.Criar({
       user_id: userId,
       gin_id: ginId,
     })
