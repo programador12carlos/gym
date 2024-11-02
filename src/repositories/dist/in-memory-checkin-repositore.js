@@ -61,15 +61,20 @@ var InMemoryCheckInRepository = /** @class */ (function () {
     na nova academia se baseando na data do check-in anterior
   */
     InMemoryCheckInRepository.prototype.procurarDataCheckinUser = function (userId, data) {
-        var startOfDay = dayjs_1["default"](data).startOf('day');
-        var endOfDay = dayjs_1["default"](data).endOf('day');
-        var verificarCheckinUser = this.items.find(function (checkin) {
-            var dataOfCadastro = dayjs_1["default"](checkin.create_time);
-            var verificarData = dataOfCadastro.isSameOrAfter(startOfDay) &&
-                dataOfCadastro.isSameOrBefore(endOfDay);
-            return checkin.user_id === userId && verificarData;
+        return __awaiter(this, void 0, Promise, function () {
+            var startOfDay, endOfDay, verificarCheckinUser;
+            return __generator(this, function (_a) {
+                startOfDay = dayjs_1["default"](data).startOf('day');
+                endOfDay = dayjs_1["default"](data).endOf('day');
+                verificarCheckinUser = this.items.find(function (checkin) {
+                    var dataOfCadastro = dayjs_1["default"](checkin.create_time);
+                    var verificarData = dataOfCadastro.isSameOrAfter(startOfDay) &&
+                        dataOfCadastro.isSameOrBefore(endOfDay);
+                    return checkin.user_id === userId && verificarData;
+                });
+                return [2 /*return*/, verificarCheckinUser || null];
+            });
         });
-        return Promise.resolve(verificarCheckinUser || null);
     };
     // [x] Criar user no banco
     InMemoryCheckInRepository.prototype.criar = function (data) {
@@ -87,6 +92,20 @@ var InMemoryCheckInRepository = /** @class */ (function () {
                 return [2 /*return*/, checkin];
             });
         });
+    };
+    InMemoryCheckInRepository.prototype.totalCheckin = function (id) {
+        return __awaiter(this, void 0, Promise, function () {
+            var total;
+            return __generator(this, function (_a) {
+                total = this.items.filter(function (item) { return item.user_id === id; }).length;
+                return [2 /*return*/, total];
+            });
+        });
+    };
+    InMemoryCheckInRepository.prototype.listarCheckin = function (userId, pagina) {
+        return Promise.resolve(this.items
+            .filter(function (item) { return item.user_id === userId; })
+            .slice((pagina - 1) * 20, pagina * 20));
     };
     return InMemoryCheckInRepository;
 }());

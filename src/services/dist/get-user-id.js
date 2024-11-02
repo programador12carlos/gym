@@ -36,35 +36,38 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.CheckinListUser = void 0;
-/*
-CRIAÇAO DA FUNÇAO PRINCIPAL
-------------------------------------------------------------------------------------
-*/
-var CheckinListUser = /** @class */ (function () {
-    function CheckinListUser(FuncoesRepositorio) {
-        this.FuncoesRepositorio = FuncoesRepositorio;
+exports.GetId = void 0;
+var resoures_error_user_1 = require("./erros/resoures-error-user");
+// criaçao da funcao principal GetId
+var GetId = /** @class */ (function () {
+    function GetId(funcosrepositorio) {
+        this.funcosrepositorio = funcosrepositorio;
     }
     /*
-    [x] listar todos os check-in imprindo todos os dados do repositorio checkin
-  usando o id para ajudar a identificar
-  */
-    CheckinListUser.prototype.listar = function (_a) {
-        var id = _a.id, pagina = _a.pagina;
+       condiçoes para procurar usuario
+  -------------------------------------------------------------------------------
+    [x] procurar o usuario pelo id
+      */
+    GetId.prototype.execute = function (_a) {
+        var userId = _a.userId;
         return __awaiter(this, void 0, Promise, function () {
-            var checkins;
+            var user;
             return __generator(this, function (_b) {
                 switch (_b.label) {
-                    case 0: return [4 /*yield*/, this.FuncoesRepositorio.listarCheckin(id, pagina)];
+                    case 0: return [4 /*yield*/, this.funcosrepositorio.procurarIdUsuario(userId)
+                        // [x] procurar o usuario pelo id
+                    ];
                     case 1:
-                        checkins = _b.sent();
-                        return [2 /*return*/, {
-                                CheckinList: checkins
-                            }];
+                        user = _b.sent();
+                        // [x] procurar o usuario pelo id
+                        if (!user) {
+                            throw new resoures_error_user_1.ResouresError();
+                        }
+                        return [2 /*return*/, { user: user }];
                 }
             });
         });
     };
-    return CheckinListUser;
+    return GetId;
 }());
-exports.CheckinListUser = CheckinListUser;
+exports.GetId = GetId;

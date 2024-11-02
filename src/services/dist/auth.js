@@ -36,35 +36,46 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.CheckinListUser = void 0;
-/*
-CRIAÇAO DA FUNÇAO PRINCIPAL
-------------------------------------------------------------------------------------
-*/
-var CheckinListUser = /** @class */ (function () {
-    function CheckinListUser(FuncoesRepositorio) {
-        this.FuncoesRepositorio = FuncoesRepositorio;
+exports.Auth = void 0;
+var erroauth_1 = require("./erros/erroauth");
+var bcryptjs_1 = require("bcryptjs");
+// criaçao da class principal
+var Auth = /** @class */ (function () {
+    function Auth(funcosrepositorio) {
+        this.funcosrepositorio = funcosrepositorio;
     }
     /*
-    [x] listar todos os check-in imprindo todos os dados do repositorio checkin
-  usando o id para ajudar a identificar
-  */
-    CheckinListUser.prototype.listar = function (_a) {
-        var id = _a.id, pagina = _a.pagina;
+    condiçoes para a autentificaçao
+  -------------------------------------------------------------------------------
+    [x] verificar a existencia email e senha do usuario, se existir emitir usuario
+      */
+    Auth.prototype.execute = function (_a) {
+        var email = _a.email, password = _a.password;
         return __awaiter(this, void 0, Promise, function () {
-            var checkins;
+            var user, doespasswordhas;
             return __generator(this, function (_b) {
                 switch (_b.label) {
-                    case 0: return [4 /*yield*/, this.FuncoesRepositorio.listarCheckin(id, pagina)];
+                    case 0: return [4 /*yield*/, this.funcosrepositorio.procurarGmailUsuario(email)
+                        // verificar a existencia da senha, caso nao existir emitir erro
+                    ];
                     case 1:
-                        checkins = _b.sent();
-                        return [2 /*return*/, {
-                                CheckinList: checkins
-                            }];
+                        user = _b.sent();
+                        // verificar a existencia da senha, caso nao existir emitir erro
+                        if (!user) {
+                            throw new erroauth_1.VerificarAuth();
+                        }
+                        return [4 /*yield*/, bcryptjs_1["default"].compare(password, user.password_has)];
+                    case 2:
+                        doespasswordhas = _b.sent();
+                        if (!doespasswordhas) {
+                            throw new erroauth_1.VerificarAuth();
+                        }
+                        // emitir usuario
+                        return [2 /*return*/, { user: user }];
                 }
             });
         });
     };
-    return CheckinListUser;
+    return Auth;
 }());
-exports.CheckinListUser = CheckinListUser;
+exports.Auth = Auth;

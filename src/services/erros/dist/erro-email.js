@@ -13,12 +13,14 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 exports.__esModule = true;
-exports.ResouresError = void 0;
-var ResouresError = /** @class */ (function (_super) {
-    __extends(ResouresError, _super);
-    function ResouresError() {
-        return _super.call(this, 'Erros nas credencias') || this;
+exports.VerificarEmailUsuario = void 0;
+var VerificarEmailUsuario = /** @class */ (function (_super) {
+    __extends(VerificarEmailUsuario, _super);
+    function VerificarEmailUsuario() {
+        var _this = _super.call(this, 'email nao existe') || this;
+        _this.name = 'verificar email usuario';
+        return _this;
     }
-    return ResouresError;
+    return VerificarEmailUsuario;
 }(Error));
-exports.ResouresError = ResouresError;
+exports.VerificarEmailUsuario = VerificarEmailUsuario;

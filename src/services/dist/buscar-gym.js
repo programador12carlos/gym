@@ -36,35 +36,35 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.CheckinListUser = void 0;
+exports.BuscarGin = void 0;
 /*
-CRIAÇAO DA FUNÇAO PRINCIPAL
-------------------------------------------------------------------------------------
+LOGICA POR TRÁS DA RESOLUÇÃO
+
+[x] - CRIAR AS INTERFACES DE ENTRADA E SAIDA DA FUNCAO BUSCAR QUE RETORNA UMA LISTA
+[x] - CRIAR A INTERFACE DE ACESSO AO BANCO DE DADOS
+[x] - CRIAR O METODO NO BANCO DE DADOS
+[x] - FINALIZAR A FUNCAO BUSCAR E FAZER OS TESTES
+-----------------------------------------------------------------------------
 */
-var CheckinListUser = /** @class */ (function () {
-    function CheckinListUser(FuncoesRepositorio) {
+var BuscarGin = /** @class */ (function () {
+    function BuscarGin(FuncoesRepositorio) {
         this.FuncoesRepositorio = FuncoesRepositorio;
     }
-    /*
-    [x] listar todos os check-in imprindo todos os dados do repositorio checkin
-  usando o id para ajudar a identificar
-  */
-    CheckinListUser.prototype.listar = function (_a) {
-        var id = _a.id, pagina = _a.pagina;
+    // [x] criar a funcao responsavel por buscar ginasio
+    BuscarGin.prototype.Buscar = function (_a) {
+        var query = _a.query, pagina = _a.pagina;
         return __awaiter(this, void 0, Promise, function () {
-            var checkins;
+            var gymList;
             return __generator(this, function (_b) {
                 switch (_b.label) {
-                    case 0: return [4 /*yield*/, this.FuncoesRepositorio.listarCheckin(id, pagina)];
+                    case 0: return [4 /*yield*/, this.FuncoesRepositorio.BuscarGym(query, pagina)];
                     case 1:
-                        checkins = _b.sent();
-                        return [2 /*return*/, {
-                                CheckinList: checkins
-                            }];
+                        gymList = _b.sent();
+                        return [2 /*return*/, { gymList: gymList }];
                 }
             });
         });
     };
-    return CheckinListUser;
+    return BuscarGin;
 }());
-exports.CheckinListUser = CheckinListUser;
+exports.BuscarGin = BuscarGin;

@@ -25,7 +25,10 @@ Funçoes do banco check-in
   /*  [x] verificar se é possivel efectuar check-in 
   na nova academia se baseando na data do check-in anterior
 */
-  procurarDataCheckinUser(userId: string, data: Date): Promise<Checkin | null> {
+  async procurarDataCheckinUser(
+    userId: string,
+    data: Date,
+  ): Promise<Checkin | null> {
     const startOfDay = dayjs(data).startOf('day')
     const endOfDay = dayjs(data).endOf('day')
     const verificarCheckinUser = this.items.find((checkin) => {
@@ -36,7 +39,7 @@ Funçoes do banco check-in
       return checkin.user_id === userId && verificarData
     })
 
-    return Promise.resolve(verificarCheckinUser || null)
+    return verificarCheckinUser || null
   }
 
   // [x] Criar user no banco
@@ -50,5 +53,18 @@ Funçoes do banco check-in
     }
     this.items.push(checkin)
     return checkin
+  }
+
+  async totalCheckin(id: string): Promise<number> {
+    const total = this.items.filter((item) => item.user_id === id).length
+    return total
+  }
+
+  listarCheckin(userId: string, pagina: number) {
+    return Promise.resolve(
+      this.items
+        .filter((item) => item.user_id === userId)
+        .slice((pagina - 1) * 20, pagina * 20),
+    )
   }
 }

@@ -50,16 +50,16 @@ var CheckinListUser = /** @class */ (function () {
   usando o id para ajudar a identificar
   */
     CheckinListUser.prototype.listar = function (_a) {
-        var id = _a.id, pagina = _a.pagina;
+        var id = _a.id;
         return __awaiter(this, void 0, Promise, function () {
-            var checkins;
+            var totalCheckin;
             return __generator(this, function (_b) {
                 switch (_b.label) {
-                    case 0: return [4 /*yield*/, this.FuncoesRepositorio.listarCheckin(id, pagina)];
+                    case 0: return [4 /*yield*/, this.FuncoesRepositorio.totalCheckin(id)];
                     case 1:
-                        checkins = _b.sent();
+                        totalCheckin = _b.sent();
                         return [2 /*return*/, {
-                                CheckinList: checkins
+                                totalCheckin: totalCheckin
                             }];
                 }
             });

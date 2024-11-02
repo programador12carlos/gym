@@ -73,7 +73,7 @@ var CheckinUser = /** @class */ (function () {
                         if (dist > 0.1) {
                             throw new Error();
                         }
-                        return [4 /*yield*/, this.funcosrepositorio.Criar({
+                        return [4 /*yield*/, this.funcosrepositorio.criar({
                                 user_id: userId,
                                 gin_id: ginId
                             })];

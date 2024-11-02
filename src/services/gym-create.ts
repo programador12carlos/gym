@@ -1,7 +1,6 @@
 import { Gin } from '@prisma/client'
 import { FuncoesDoRepositorioGym } from '@/repositories/uso-repositories-gyn'
 
-
 /*
  [x] criaçao das interfaces de entrada e saida da funcao
  -----------------------------------------------------------------------
@@ -23,7 +22,7 @@ interface GymResponse {
 */
 export class Ginasio {
   constructor(private FuncoesRepositorio: FuncoesDoRepositorioGym) {}
-// [x] criar a funcao responsavel por criar o ginasio
+  // [x] criar a funcao responsavel por criar o ginasio
 
   async Criar({
     id,
@@ -42,7 +41,7 @@ export class Ginasio {
       longitude,
     })
     return {
-      gym
+      gym,
     }
   }
 }

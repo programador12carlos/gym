@@ -1,13 +1,11 @@
 import { FuncoesDoRepositorioCheckin } from '@/repositories/uso-repositorio-checkin'
-import { Checkin } from '@prisma/client'
 
 // [x] CRIAR AS INTERFACES DO GET LIST CHECKIN USERS
-interface CheckinListUserRequest {
+interface TotalCheckInUserRequest {
   id: string
-  pagina: number
 }
-interface CheckinListUserResponse {
-  CheckinList: Checkin[]
+interface TotalCheckInUserResponse {
+  totalCheckin: number
 }
 /*
 CRIAÇAO DA FUNÇAO PRINCIPAL 
@@ -21,11 +19,10 @@ usando o id para ajudar a identificar
 */
   async listar({
     id,
-    pagina,
-  }: CheckinListUserRequest): Promise<CheckinListUserResponse> {
-    const checkins = await this.FuncoesRepositorio.listarCheckin(id, pagina)
+  }: TotalCheckInUserRequest): Promise<TotalCheckInUserResponse> {
+    const totalCheckin = await this.FuncoesRepositorio.totalCheckin(id)
     return {
-      CheckinList: checkins,
+      totalCheckin,
     }
   }
 }

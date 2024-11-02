@@ -51,20 +51,21 @@ vitest_1.describe('testes do resumo checkin', function () { return __awaiter(voi
             var CheckinList;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, bancoDeDados.Criar({
+                    case 0: return [4 /*yield*/, bancoDeDados.criar({
                             user_id: 'CR-01',
                             gin_id: 'GIN-01'
                         })];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, bancoDeDados.Criar({
+                        return [4 /*yield*/, bancoDeDados.criar({
                                 user_id: 'CR-01',
                                 gin_id: 'GIN-02'
                             })];
                     case 2:
                         _a.sent();
                         return [4 /*yield*/, sut.listar({
-                                id: 'CR-01'
+                                id: 'CR-01',
+                                pagina: 1
                             })];
                     case 3:
                         CheckinList = (_a.sent()).CheckinList;
@@ -72,6 +73,40 @@ vitest_1.describe('testes do resumo checkin', function () { return __awaiter(voi
                         vitest_1.expect(CheckinList).toEqual([
                             vitest_1.expect.objectContaining({ gin_id: 'GIN-01' }),
                             vitest_1.expect.objectContaining({ gin_id: 'GIN-02' }),
+                        ]);
+                        return [2 /*return*/];
+                }
+            });
+        }); });
+        vitest_1.it('DEVE SER POSSIVEL OBTER RESUMO PAGINADO', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var i, CheckinList;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        i = 1;
+                        _a.label = 1;
+                    case 1:
+                        if (!(i <= 22)) return [3 /*break*/, 4];
+                        return [4 /*yield*/, bancoDeDados.criar({
+                                gin_id: "GIN-" + i,
+                                user_id: 'CR-01'
+                            })];
+                    case 2:
+                        _a.sent();
+                        _a.label = 3;
+                    case 3:
+                        i++;
+                        return [3 /*break*/, 1];
+                    case 4: return [4 /*yield*/, sut.listar({
+                            id: 'CR-01',
+                            pagina: 2
+                        })];
+                    case 5:
+                        CheckinList = (_a.sent()).CheckinList;
+                        vitest_1.expect(CheckinList).toHaveLength(2);
+                        vitest_1.expect(CheckinList).toEqual([
+                            vitest_1.expect.objectContaining({ gin_id: 'GIN-21' }),
+                            vitest_1.expect.objectContaining({ gin_id: 'GIN-22' }),
                         ]);
                         return [2 /*return*/];
                 }

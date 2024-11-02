@@ -36,35 +36,52 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.CheckinListUser = void 0;
-/*
-CRIAÇAO DA FUNÇAO PRINCIPAL
-------------------------------------------------------------------------------------
-*/
-var CheckinListUser = /** @class */ (function () {
-    function CheckinListUser(FuncoesRepositorio) {
-        this.FuncoesRepositorio = FuncoesRepositorio;
+exports.RegistarUserCase = void 0;
+var bcryptjs_1 = require("bcryptjs");
+var erro_email_1 = require("./erros/erro-email");
+// [x] criacao da funçao principal Register use case
+var RegistarUserCase = /** @class */ (function () {
+    function RegistarUserCase(funcoesdorepositorio) {
+        this.funcoesdorepositorio = funcoesdorepositorio;
     }
     /*
-    [x] listar todos os check-in imprindo todos os dados do repositorio checkin
-  usando o id para ajudar a identificar
-  */
-    CheckinListUser.prototype.listar = function (_a) {
-        var id = _a.id, pagina = _a.pagina;
+      condiçoes para a criacao do usuario
+  -------------------------------------------------------------------------------
+    [x] verificar se o email existe
+    [x] criar senha e criptografar senha com bcrypt
+    [x] verificar a existencia de email
+      */
+    RegistarUserCase.prototype.execute = function (_a) {
+        var name = _a.name, email = _a.email, password = _a.password;
         return __awaiter(this, void 0, Promise, function () {
-            var checkins;
+            var password_hash, userEmail, usuario;
             return __generator(this, function (_b) {
                 switch (_b.label) {
-                    case 0: return [4 /*yield*/, this.FuncoesRepositorio.listarCheckin(id, pagina)];
+                    case 0: return [4 /*yield*/, bcryptjs_1["default"].hash(password, 6)
+                        // [x] verificar a existencia de email
+                    ];
                     case 1:
-                        checkins = _b.sent();
+                        password_hash = _b.sent();
+                        return [4 /*yield*/, this.funcoesdorepositorio.procurarGmailUsuario(email)];
+                    case 2:
+                        userEmail = _b.sent();
+                        if (userEmail) {
+                            throw new erro_email_1.VerificarEmailUsuario();
+                        }
+                        return [4 /*yield*/, this.funcoesdorepositorio.criar({
+                                name: name,
+                                email: email,
+                                password_has: password_hash
+                            })];
+                    case 3:
+                        usuario = _b.sent();
                         return [2 /*return*/, {
-                                CheckinList: checkins
+                                usuario: usuario
                             }];
                 }
             });
         });
     };
-    return CheckinListUser;
+    return RegistarUserCase;
 }());
-exports.CheckinListUser = CheckinListUser;
+exports.RegistarUserCase = RegistarUserCase;

@@ -36,35 +36,43 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.CheckinListUser = void 0;
-/*
-CRIAÇAO DA FUNÇAO PRINCIPAL
-------------------------------------------------------------------------------------
-*/
-var CheckinListUser = /** @class */ (function () {
-    function CheckinListUser(FuncoesRepositorio) {
-        this.FuncoesRepositorio = FuncoesRepositorio;
-    }
-    /*
-    [x] listar todos os check-in imprindo todos os dados do repositorio checkin
-  usando o id para ajudar a identificar
-  */
-    CheckinListUser.prototype.listar = function (_a) {
-        var id = _a.id, pagina = _a.pagina;
-        return __awaiter(this, void 0, Promise, function () {
-            var checkins;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
-                    case 0: return [4 /*yield*/, this.FuncoesRepositorio.listarCheckin(id, pagina)];
+var in_memory_checkin_repositore_1 = require("@/repositories/in-memory-checkin-repositore");
+var vitest_1 = require("vitest");
+var get_total_checkin_1 = require("./get-total-checkin");
+var BancoDeDados;
+var sut;
+vitest_1.describe('TESTANDO A OBTENCAO DO VALOR TOTAL DE CHECKIN', function () { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        vitest_1.beforeEach(function () {
+            BancoDeDados = new in_memory_checkin_repositore_1.InMemoryCheckInRepository();
+            sut = new get_total_checkin_1.CheckinListUser(BancoDeDados);
+        });
+        vitest_1.it('TESTANDO A CONTAGEM DOS CHECKINS', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var totalCheckin;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, BancoDeDados.criar({
+                            gin_id: 'GIN-1',
+                            user_id: 'CR-01'
+                        })];
                     case 1:
-                        checkins = _b.sent();
-                        return [2 /*return*/, {
-                                CheckinList: checkins
-                            }];
+                        _a.sent();
+                        return [4 /*yield*/, BancoDeDados.criar({
+                                gin_id: 'GIN-2',
+                                user_id: 'CR-01'
+                            })];
+                    case 2:
+                        _a.sent();
+                        return [4 /*yield*/, sut.listar({
+                                id: 'CR-01'
+                            })];
+                    case 3:
+                        totalCheckin = (_a.sent()).totalCheckin;
+                        vitest_1.expect(totalCheckin).toEqual(2);
+                        return [2 /*return*/];
                 }
             });
-        });
-    };
-    return CheckinListUser;
-}());
-exports.CheckinListUser = CheckinListUser;
+        }); });
+        return [2 /*return*/];
+    });
+}); });
